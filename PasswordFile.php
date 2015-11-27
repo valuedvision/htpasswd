@@ -127,6 +127,7 @@ class PasswordFile
      */
     public function remove($user)
     {
+        $this->load();
         if (!isset($this->users[$user])) {
             return false;
         }
