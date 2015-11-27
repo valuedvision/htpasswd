@@ -119,6 +119,34 @@ class PasswordFile
     }
 
     /**
+     * Removes a user from the file
+     *
+     * @param string $user
+     * @return bool
+     *         the user existed and has been removed
+     */
+    public function remove($user)
+    {
+        if (!isset($this->users[$user])) {
+            return false;
+        }
+        unset($this->users[$user]);
+        return true;
+    }
+
+    /**
+     * Sets new filename
+     *
+     * @param string $filename
+     */
+    public function setFileName($filename)
+    {
+        $this->load();
+        $this->filename = $filename;
+        $this->io = new Real($filename);
+    }
+
+    /**
      * Loads a user list from file
      *
      * @throws \axy\htpasswd\errors\InvalidFileFormat

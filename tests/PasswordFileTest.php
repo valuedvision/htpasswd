@@ -78,4 +78,28 @@ class PasswordFileTest extends \PHPUnit_Framework_TestCase
         $file = new PasswordFile(__DIR__.'/tst/invalid');
         $file->isUserExist('one');
     }
+
+    /**
+     * covers ::remove
+     * covers ::setFileName
+     */
+    public function testRemove()
+    {
+        $fnSource = __DIR__.'/tst/test';
+        $fn = __DIR__.'/tmp/test';
+        if (is_file($fn)) {
+            unlink($fn);
+        }
+        $file = new PasswordFile($fnSource);
+        $file->setFileName($fn);
+        $this->assertFalse($file->remove('none'));
+        $this->assertTrue($file->remove('one'));
+        $this->assertFalse($file->remove('one'));
+        $this->assertFalse($file->isUserExist('one'));
+        $this->assertTrue($file->isUserExist('two'));
+        $file->save();
+        $this->assertFileExists($fn);
+        $expected = 'two:$apr1$Hcy4Z1A2$OhLViOzdKWWIuF..c/90U0';
+        $this->assertSame($expected, trim(file_get_contents($fn)));
+    }
 }

@@ -20,4 +20,9 @@ interface IFile
      * @param string $content
      */
     public function save($content);
+
+    /**
+     * @param string $filename
+     */
+    public function setFileName($filename);
 }

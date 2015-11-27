@@ -41,6 +41,14 @@ class Real implements IFile
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function setFileName($filename)
+    {
+        $this->filename = $filename;
+    }
+
+    /**
      * @var string
      */
     private $filename;

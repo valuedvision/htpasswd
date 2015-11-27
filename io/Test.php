@@ -43,6 +43,13 @@ class Test implements IFile
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function setFileName($content)
+    {
+    }
+
+    /**
      * Returns the content as an array of lines
      */
     public function getLines()
