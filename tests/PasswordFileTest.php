@@ -70,6 +70,30 @@ class PasswordFileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * covers ::save
+     */
+    public function testRealSave()
+    {
+        $fn = __DIR__.'/tmp/test';
+        if (is_file($fn)) {
+            unlink($fn);
+        }
+        $file = new PasswordFile($fn);
+        $file->setPassword('one', 'three');
+        $file->setPassword('two', 'four');
+        $this->assertFileNotExists($fn);
+        $file->save();
+        $this->assertFileExists($fn);
+        $file2 = new PasswordFile($fn);
+        $this->assertTrue($file2->isUserExist('one'));
+        $this->assertTrue($file2->isUserExist('two'));
+        $this->assertFalse($file2->isUserExist('three'));
+        $this->assertFalse($file2->isUserExist('five'));
+        $this->assertTrue($file2->verify('one', 'three'));
+        $this->assertTrue($file2->verify('two', 'four'));
+    }
+
+    /**
      * covers ::load
      * @expectedException \axy\htpasswd\errors\InvalidFileFormat
      */
