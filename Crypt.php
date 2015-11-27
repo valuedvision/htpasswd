@@ -29,4 +29,22 @@ class Crypt
                 return $password;
         }
     }
+
+    /**
+     * Checks if a password matches a hash
+     *
+     * @param string $password
+     * @param string $hash
+     * @return bool
+     */
+    public static function verify($password, $hash)
+    {
+        if ($password === $hash) {
+            return true;
+        }
+        if (APR1::verify($password, $hash)) {
+            return true;
+        }
+        return false;
+    }
 }
