@@ -35,6 +35,16 @@ class CryptTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * covers ::hash
+     */
+    public function testHashSha1()
+    {
+        $password = 'my-password';
+        $sha1 = '{SHA}7b1eEZ+UutufmaZ6xv9MelIErWE=';
+        $this->assertSame($sha1, Crypt::hash($password, PasswordFile::ALG_SHA1));
+    }
+
+    /**
      * covers ::verify
      * @dataProvider providerVerify
      * @param string $password
@@ -54,9 +64,34 @@ class CryptTest extends \PHPUnit_Framework_TestCase
         return [
             'plain' => ['password', 'password', true],
             'md5' => ['password', '$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0', true],
+            'sha1' => ['password', '{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g=', true],
             'plain_as_md5' => ['$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0', '$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0', true],
+            'plain_as_sh1' => ['{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g=', '{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g=', true],
             'fail_plain' => ['password', 'other', false],
             'fail_md5' => ['password', '$apr1$aGwevNmX$4WQ0UxE4TzhoaX6QkeBJJ0', false],
+            'fail_sha1' => ['password', '{SHA}W6ph5Mm5Zz8GgiULbPgzG37mj9g=', false],
+        ];
+    }
+
+    /**
+     * covers ::sha1
+     * @dataProvider providerSha1
+     * @param string $password
+     * @param string $expected
+     */
+    public function testSha1($password, $expected)
+    {
+        $this->assertSame($expected, Crypt::sha1($password));
+    }
+
+    /**
+     * @return array
+     */
+    public function providerSha1()
+    {
+        return [
+            ['password', '{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g='],
+            ['my-password-long-long-long', '{SHA}79Dt2/mp7D80ZQdLIOxJScmlttU='],
         ];
     }
 }

@@ -25,6 +25,8 @@ class Crypt
         switch ($algorithm) {
             case PasswordFile::ALG_MD5:
                 return APR1::hash($password);
+            case PasswordFile::ALG_SHA1:
+                return self::sha1($password);
             case PasswordFile::ALG_PLAIN:
                 return $password;
         }
@@ -45,6 +47,20 @@ class Crypt
         if (APR1::verify($password, $hash)) {
             return true;
         }
+        if ($hash === self::sha1($password)) {
+            return true;
+        }
         return false;
+    }
+
+    /**
+     * Hash by SHA-1 (Apache version)
+     *
+     * @param string $password
+     * @return string
+     */
+    public static function sha1($password)
+    {
+        return '{SHA}'.base64_encode(sha1($password, true));
     }
 }
