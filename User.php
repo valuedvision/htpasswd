@@ -24,6 +24,14 @@ class User
     }
 
     /**
+     * Returns the user name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Returns the content of a htpasswd file line
      *
      * @return string

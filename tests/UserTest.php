@@ -16,12 +16,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * covers ::getFileLine
+     * covers ::getName
      */
     public function testGetFileLine()
     {
         $user = new User('nick', 'qq0e00d');
         $this->assertSame('nick:qq0e00d', $user->getFileLine());
         $this->assertSame('nick:qq0e00d', (string)$user);
+        $this->assertSame('nick', $user->getName());
     }
 
     /**
