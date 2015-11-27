@@ -45,6 +45,17 @@ class User
     }
 
     /**
+     * Sets the password for the user
+     *
+     * @param string $password
+     * @param string $algorithm
+     */
+    public function setPassword($password, $algorithm = PasswordFile::ALG_MD5)
+    {
+        $this->hash = Crypt::hash($password, $algorithm);
+    }
+
+    /**
      * @return string
      */
     public function __toString()

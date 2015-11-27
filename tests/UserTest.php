@@ -7,6 +7,7 @@
 namespace axy\htpasswd\tests;
 
 use axy\htpasswd\User;
+use axy\htpasswd\PasswordFile;
 
 /**
  * coversDefaultClass axy\htpasswd\User
@@ -31,5 +32,17 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $user = new User('nick', '$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0');
         $this->assertTrue($user->verify('password'));
         $this->assertFalse($user->verify('another'));
+    }
+
+    /**
+     * covers ::setPassword
+     */
+    public function testSetPassword()
+    {
+        $user = new User('nick', '$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0');
+        $user->setPassword('another', PasswordFile::ALG_SHA1);
+        $this->assertFalse($user->verify('password'));
+        $this->assertTrue($user->verify('another'));
+        $this->assertSame('nick:{SHA}t8j/uPvGfBcTKODo9kNpTo5hszU=', $user->getFileLine());
     }
 }
