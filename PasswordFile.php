@@ -12,6 +12,7 @@ namespace axy\htpasswd;
 class PasswordFile
 {
     const ALG_MD5 = 'md5';
+    const ALG_PLAIN = 'plain';
 
     /**
      * The constructor

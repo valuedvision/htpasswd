@@ -22,5 +22,15 @@ class CryptTest extends \PHPUnit_Framework_TestCase
     {
         $hash = Crypt::hash('my-password', PasswordFile::ALG_MD5);
         $this->assertTrue(APR1::verify('my-password', $hash));
+        $hash2 = Crypt::hash('default');
+        $this->assertTrue(APR1::verify('default', $hash2));
+    }
+
+    /**
+     * covers ::hash
+     */
+    public function testHashPlain()
+    {
+        $this->assertSame('my-password', Crypt::hash('my-password', PasswordFile::ALG_PLAIN));
     }
 }

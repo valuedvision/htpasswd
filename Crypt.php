@@ -25,6 +25,8 @@ class Crypt
         switch ($algorithm) {
             case PasswordFile::ALG_MD5:
                 return APR1::hash($password);
+            case PasswordFile::ALG_PLAIN:
+                return $password;
         }
     }
 }
