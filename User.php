@@ -34,6 +34,17 @@ class User
     }
 
     /**
+     * Checks a password for the user
+     *
+     * @param string $password
+     * @return bool
+     */
+    public function verify($password)
+    {
+        return Crypt::verify($password, $this->hash);
+    }
+
+    /**
      * @return string
      */
     public function __toString()

@@ -22,4 +22,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('nick:qq0e00d', $user->getFileLine());
         $this->assertSame('nick:qq0e00d', (string)$user);
     }
+
+    /**
+     * covers ::verify
+     */
+    public function testVerify()
+    {
+        $user = new User('nick', '$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0');
+        $this->assertTrue($user->verify('password'));
+        $this->assertFalse($user->verify('another'));
+    }
 }
