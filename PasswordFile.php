@@ -8,7 +8,7 @@ namespace axy\htpasswd;
 
 use axy\htpasswd\io\IFile;
 use axy\htpasswd\io\Real;
-use axy\htpasswd\io\Test;
+use axy\htpasswd\errors\InvalidFileFormat;
 
 /**
  * Htpasswd file wrapper
@@ -146,7 +146,11 @@ class PasswordFile
      */
     private function invalid()
     {
-
+        $filename = $this->filename;
+        if (!is_string($filename)) {
+            $filename = null;
+        }
+        throw new InvalidFileFormat($filename);
     }
 
     /**

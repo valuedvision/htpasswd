@@ -68,4 +68,14 @@ class PasswordFileTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($file->verify('one' ,'two-password'));
         $this->assertFalse($file->verify('two' ,'none'));
     }
+
+    /**
+     * covers ::load
+     * @expectedException \axy\htpasswd\errors\InvalidFileFormat
+     */
+    public function testInvalid()
+    {
+        $file = new PasswordFile(__DIR__.'/tst/invalid');
+        $file->isUserExist('one');
+    }
 }
