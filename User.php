@@ -64,6 +64,21 @@ class User
     }
 
     /**
+     * Load an user from the file line
+     *
+     * @param string $line
+     * @return \axy\htpasswd\User
+     */
+    public static function loadFromFileLine($line)
+    {
+        $line = explode(':', $line, 2);
+        if (count($line) !== 2) {
+            return null;
+        }
+        return new self($line[0], $line[1]);
+    }
+
+    /**
      * @var string
      */
     private $name;

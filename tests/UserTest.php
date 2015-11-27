@@ -45,4 +45,34 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($user->verify('another'));
         $this->assertSame('nick:{SHA}t8j/uPvGfBcTKODo9kNpTo5hszU=', $user->getFileLine());
     }
+
+    /**
+     * covers ::loadFromFileLine
+     * @dataProvider providerLoadFromFileLine
+     * @param string $line
+     * @param bool $success
+     */
+    public function testLoadFromFileLine($line, $success)
+    {
+        if ($success) {
+            $user = User::loadFromFileLine($line);
+            $this->assertInstanceOf('axy\htpasswd\User', $user);
+            $this->assertSame($line, $user->getFileLine());
+        } else {
+            $this->assertNull(User::loadFromFileLine($line));
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function providerLoadFromFileLine()
+    {
+        return [
+            ['nick:$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0', true],
+            ['nick:invalid:line', true],
+            ['nick', false],
+            ['', false],
+        ];
+    }
 }
