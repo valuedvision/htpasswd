@@ -62,11 +62,11 @@ class PasswordFileTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($file->isUserExist('one'));
         $this->assertTrue($file->isUserExist('two'));
         $this->assertFalse($file->isUserExist('three'));
-        $this->assertTrue($file->verify('one' ,'one-password'));
-        $this->assertTrue($file->verify('two' ,'two-password'));
-        $this->assertFalse($file->verify('three' ,'three-password'));
-        $this->assertFalse($file->verify('one' ,'two-password'));
-        $this->assertFalse($file->verify('two' ,'none'));
+        $this->assertTrue($file->verify('one', 'one-password'));
+        $this->assertTrue($file->verify('two', 'two-password'));
+        $this->assertFalse($file->verify('three', 'three-password'));
+        $this->assertFalse($file->verify('one', 'two-password'));
+        $this->assertFalse($file->verify('two', 'none'));
     }
 
     /**
