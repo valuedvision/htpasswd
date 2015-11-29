@@ -30,6 +30,7 @@ class Crypt
             case PasswordFile::ALG_PLAIN:
                 return $password;
         }
+        return null;
     }
 
     /**

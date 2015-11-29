@@ -45,6 +45,14 @@ class CryptTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * covers ::hash
+     */
+    public function testHashUndefined()
+    {
+        $this->assertNull(Crypt::hash('password', 'undefined'));
+    }
+
+    /**
      * covers ::verify
      * @dataProvider providerVerify
      * @param string $password

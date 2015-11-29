@@ -46,4 +46,15 @@ class RealTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('axy\htpasswd\errors\FileNotSpecified');
         $real->save('Content');
     }
+
+    /**
+     * covers ::setFileName
+     */
+    public function testSetFilename()
+    {
+        $real = new Real(null);
+        $fn = __DIR__.'/../tst/invalid';
+        $real->setFileName($fn);
+        $this->assertSame(file_get_contents($fn), $real->load());
+    }
 }

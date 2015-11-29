@@ -104,6 +104,17 @@ class PasswordFileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * covers ::load
+     * @expectedException \axy\htpasswd\errors\InvalidFileFormat
+     */
+    public function testInvalidMock()
+    {
+        $mock = new Test('invalid');
+        $file = new PasswordFile($mock);
+        $file->isUserExist('one');
+    }
+
+    /**
      * covers ::remove
      * covers ::setFileName
      */

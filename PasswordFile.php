@@ -151,12 +151,13 @@ class PasswordFile
     /**
      * Loads a user list from file
      *
+     * @return null
      * @throws \axy\htpasswd\errors\InvalidFileFormat
      */
     private function load()
     {
         if ($this->users) {
-            return;
+            return null;
         }
         $content = $this->io->load();
         foreach (explode("\n", $content) as $line) {
@@ -169,9 +170,11 @@ class PasswordFile
                 $this->users[$user->getName()] = $user;
             }
         }
+        return null;
     }
 
     /**
+     * @return null
      * @throws \axy\htpasswd\errors\InvalidFileFormat
      */
     private function invalid()

@@ -49,4 +49,14 @@ class TestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('One'.PHP_EOL.'Two', $test->load());
         $this->assertSame(['One', 'Two'], $test->getLines());
     }
+
+    /**
+     * covers ::setFileName
+     */
+    public function testSetFilename()
+    {
+        $test = new Test('test');
+        $test->setFileName('some/file');
+        $this->assertSame('test', $test->load());
+    }
 }
