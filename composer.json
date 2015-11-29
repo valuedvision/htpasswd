@@ -1,7 +1,7 @@
 {
     "name": "axy/htpasswd",
     "type": "library",
-    "description": "",
+    "description": "Working with htpasswd file",
     "keywords": [
     ],
     "homepage": "https://github.com/axypro/htpasswd",

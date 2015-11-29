@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * Working with htpasswd file
  *
  * @package axy\htpasswd
  * @author Oleg Grigoriev <go.vasac@gmail.com>
