@@ -34,4 +34,16 @@ class RealTest extends \PHPUnit_Framework_TestCase
         $real2 = new Real($fn);
         $this->assertSame($content, $real2->load());
     }
+
+    /**
+     * covers ::load
+     * covers ::save
+     */
+    public function testNotSpecified()
+    {
+        $real = new Real(null);
+        $this->assertSame('', $real->load());
+        $this->setExpectedException('axy\htpasswd\errors\FileNotSpecified');
+        $real->save('Content');
+    }
 }

@@ -18,6 +18,7 @@ interface IFile
 
     /**
      * @param string $content
+     * @throws \axy\htpasswd\errors\FileNotSpecified
      */
     public function save($content);
 

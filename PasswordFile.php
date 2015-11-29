@@ -22,9 +22,9 @@ class PasswordFile
     /**
      * The constructor
      *
-     * @param mixed $filename
+     * @param mixed $filename [optional]
      */
-    public function __construct($filename)
+    public function __construct($filename = null)
     {
         if ($filename instanceof IFile) {
             $this->io = $filename;
@@ -69,6 +69,7 @@ class PasswordFile
      * Saves the user list to the file
      *
      * @throws \axy\htpasswd\errors\InvalidFileFormat
+     * @throws \axy\htpasswd\errors\FileNotSpecified
      */
     public function save()
     {

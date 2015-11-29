@@ -6,6 +6,8 @@
 
 namespace axy\htpasswd\io;
 
+use axy\htpasswd\errors\FileNotSpecified;
+
 /**
  * Real file
  */
@@ -26,7 +28,7 @@ class Real implements IFile
      */
     public function load()
     {
-        if (!is_file($this->filename)) {
+        if (($this->filename === null) || (!is_file($this->filename))) {
             return '';
         }
         return file_get_contents($this->filename);
@@ -37,6 +39,9 @@ class Real implements IFile
      */
     public function save($content)
     {
+        if ($this->filename === null) {
+            throw new FileNotSpecified();
+        }
         file_put_contents($this->filename, $content);
     }
 

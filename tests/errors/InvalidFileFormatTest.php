@@ -18,8 +18,8 @@ class InvalidFileFormatTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreate()
     {
-        $file = new InvalidFileFormat('/tmp/htpasswd');
-        $this->assertSame('/tmp/htpasswd', $file->getFileName());
-        $this->assertSame('Htpasswd file /tmp/htpasswd has invalid format', $file->getMessage());
+        $e = new InvalidFileFormat('/tmp/htpasswd');
+        $this->assertSame('/tmp/htpasswd', $e->getFileName());
+        $this->assertSame('Htpasswd file /tmp/htpasswd has invalid format', $e->getMessage());
     }
 }

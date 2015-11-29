@@ -126,4 +126,16 @@ class PasswordFileTest extends \PHPUnit_Framework_TestCase
         $expected = 'two:$apr1$Hcy4Z1A2$OhLViOzdKWWIuF..c/90U0';
         $this->assertSame($expected, trim(file_get_contents($fn)));
     }
+
+    public function testFileNotSpecified()
+    {
+        $file = new PasswordFile();
+        $this->assertNull($file->getFileName());
+        $file->setPassword('nick', 'pass', PasswordFile::ALG_PLAIN);
+        $this->assertSame('nick:pass'.PHP_EOL, $file->getContent());
+        $this->assertTrue($file->isUserExist('nick'));
+        $this->assertFalse($file->isUserExist('pass'));
+        $this->setExpectedException('axy\htpasswd\errors\FileNotSpecified');
+        $file->save();
+    }
 }
