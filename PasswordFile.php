@@ -17,6 +17,7 @@ class PasswordFile
 {
     const ALG_MD5 = 'md5';
     const ALG_SHA1 = 'sha1';
+    const ALG_CRYPT = 'crypt';
     const ALG_PLAIN = 'plain';
 
     /**

@@ -12,6 +12,7 @@ use axy\crypt\APR1;
 
 /**
  * coversDefaultClass axy\htpasswd\Crypt
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class CryptTest extends \PHPUnit_Framework_TestCase
 {
@@ -47,6 +48,21 @@ class CryptTest extends \PHPUnit_Framework_TestCase
     /**
      * covers ::hash
      */
+    public function testHashCrypt()
+    {
+        $password = '123456';
+        $hash = Crypt::hash($password, PasswordFile::ALG_CRYPT);
+        $this->assertInternalType('string', $hash);
+        $pattern = '~^([a-zA-Z0-9/\.]{2})[a-zA-Z0-9/\.]{11}$~s';
+        if (!preg_match($pattern, $hash, $matches)) {
+            $this->fail('Crypt pattern');
+        }
+        $this->assertSame($hash, crypt($password, $matches[1]));
+    }
+
+    /**
+     * covers ::hash
+     */
     public function testHashUndefined()
     {
         $this->assertNull(Crypt::hash('password', 'undefined'));
@@ -57,9 +73,9 @@ class CryptTest extends \PHPUnit_Framework_TestCase
      * @dataProvider providerVerify
      * @param string $password
      * @param string $hash
-     * @param bool $expected
+     * @param bool $expected [optional]
      */
-    public function testVerify($password, $hash, $expected)
+    public function testVerify($password, $hash, $expected = true)
     {
         $this->assertSame($expected, Crypt::verify($password, $hash));
     }
@@ -70,14 +86,17 @@ class CryptTest extends \PHPUnit_Framework_TestCase
     public function providerVerify()
     {
         return [
-            'plain' => ['password', 'password', true],
-            'md5' => ['password', '$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0', true],
-            'sha1' => ['password', '{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g=', true],
-            'plain_as_md5' => ['$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0', '$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0', true],
-            'plain_as_sh1' => ['{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g=', '{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g=', true],
+            'plain' => ['password', 'password'],
+            'md5' => ['password', '$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0'],
+            'sha1' => ['password', '{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g='],
+            'crypt' => ['password', 'rOVL0k/supDAY'],
+            'plain_as_md5' => ['$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0', '$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0'],
+            'plain_as_sha1' => ['{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g=', '{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g='],
+            'plain_as_crypt' => ['rOVL0k/supDAY', 'rOVL0k/supDAY'],
             'fail_plain' => ['password', 'other', false],
             'fail_md5' => ['password', '$apr1$aGwevNmX$4WQ0UxE4TzhoaX6QkeBJJ0', false],
             'fail_sha1' => ['password', '{SHA}W6ph5Mm5Zz8GgiULbPgzG37mj9g=', false],
+            'fail_crypt' => ['password', 'rOVL0z/supDAY', false],
         ];
     }
 
@@ -100,6 +119,58 @@ class CryptTest extends \PHPUnit_Framework_TestCase
         return [
             ['password', '{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g='],
             ['my-password-long-long-long', '{SHA}79Dt2/mp7D80ZQdLIOxJScmlttU='],
+        ];
+    }
+
+    /**
+     * covers ::cryptVerify
+     * @dataProvider providerCryptVerify
+     * @param string $password
+     * @param string $hash
+     * @param bool $expected [optional]
+     */
+    public function testCryptVerify($password, $hash, $expected = true)
+    {
+        $this->assertSame($expected, Crypt::cryptVerify($password, $hash));
+    }
+
+    /**
+     * @return array
+     */
+    public function providerCryptVerify()
+    {
+        return [
+            ['password', 'rOVL0k/supDAY'],
+            ['password', 'l2eNr.2J4AvwE'],
+            ['long-long-password', 'pviOZdeKeC.vU'],
+            ['long-long', 'pviOZdeKeC.vU'],
+            ['long-lon', 'pviOZdeKeC.vU'],
+            ['long-lo', 'pviOZdeKeC.vU', false],
+            ['password', 'l3eNr.2J4AvwE', false],
+        ];
+    }
+
+    /**
+     * covers ::cryptHash
+     * @dataProvider providerCryptHash
+     * @param string $password
+     */
+    public function testCryptHash($password)
+    {
+        $hash = Crypt::cryptHash($password);
+        $this->assertInternalType('string', $hash);
+        $this->assertTrue(Crypt::cryptVerify($password, $hash));
+    }
+
+    /**
+     * @return array
+     */
+    public function providerCryptHash()
+    {
+        return [
+            ['password'],
+            ['my-password'],
+            ['qwe-rty'],
         ];
     }
 }

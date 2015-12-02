@@ -24,11 +24,11 @@ Currently supported the following algorithms (constants of `PasswordFile::*`):
 
  * `ALG_MD5`: Apache APR1-MD5 algorithm (by default)
  * `ALG_SHA1`: SHA-1
+ * `ALG_CRYPT`: crypt (unux)
  * `ALG_PLAIN`: Plain text (not supported of servers on some platforms).
 
 Currently not supported:
 
- * Crypt
  * BCrypt
 
 ##### `__construct([string $filename])`
