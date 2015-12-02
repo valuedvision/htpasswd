@@ -23,13 +23,10 @@ $file->save();
 Currently supported the following algorithms (constants of `PasswordFile::*`):
 
  * `ALG_MD5`: Apache APR1-MD5 algorithm (by default)
+ * `ALG_BCrypt`: Blowfish
  * `ALG_SHA1`: SHA-1
- * `ALG_CRYPT`: crypt (unux)
+ * `ALG_CRYPT`: crypt (unix)
  * `ALG_PLAIN`: Plain text (not supported of servers on some platforms).
-
-Currently not supported:
-
- * BCrypt
 
 ##### `__construct([string $filename])`
 
@@ -46,10 +43,13 @@ $file->getContent(); // out of the "file" content
 $file->save(); // Exception FileNotSpecified
 ```
 
-##### `setPassword(string $user, string $password [, string $algorithm]): bool`
+##### `setPassword(string $user, string $password [, string $algorithm, [array $options]): bool`
 
 Sets the password `$password` for a user `$user`.
 For hashing uses `$algorithm` (by default Apache MD5).
+
+`$options` is an array of options for hashing.
+Only `cost` for BCrypt (integer of from 4 to 31)
 
 Returns `TRUE` a new user has been created.
 And `FALSE` if has been changed the password of an existing user.

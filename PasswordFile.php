@@ -16,6 +16,7 @@ use axy\htpasswd\errors\InvalidFileFormat;
 class PasswordFile
 {
     const ALG_MD5 = 'md5';
+    const ALG_BCRYPT = 'bcrypt';
     const ALG_SHA1 = 'sha1';
     const ALG_CRYPT = 'crypt';
     const ALG_PLAIN = 'plain';
@@ -49,21 +50,23 @@ class PasswordFile
      * @param string $user
      * @param string $password
      * @param string $algorithm [optional]
+     * @param array $options [optional]
      * @return bool
      *         the user has been created
      * @throws \axy\htpasswd\errors\InvalidFileFormat
      */
-    public function setPassword($user, $password, $algorithm = self::ALG_MD5)
+    public function setPassword($user, $password, $algorithm = self::ALG_MD5, array $options = null)
     {
         $this->load();
-        if (isset($this->users[$user])) {
-            $this->users[$user]->setPassword($password, $algorithm);
-            return false;
+        $new = !isset($this->users[$user]);
+        if ($new) {
+            $oUser = new User($user);
+            $oUser->setPassword($password, $algorithm, $options);
+            $this->users[$user] = $oUser;
+        } else {
+            $this->users[$user]->setPassword($password, $algorithm, $options);
         }
-        $oUser = new User($user);
-        $oUser->setPassword($password, $algorithm);
-        $this->users[$user] = $oUser;
-        return true;
+        return $new;
     }
 
     /**

@@ -57,10 +57,11 @@ class User
      *
      * @param string $password
      * @param string $algorithm
+     * @param array $options [optional]
      */
-    public function setPassword($password, $algorithm = PasswordFile::ALG_MD5)
+    public function setPassword($password, $algorithm = PasswordFile::ALG_MD5, array $options = null)
     {
-        $this->hash = Crypt::hash($password, $algorithm);
+        $this->hash = Crypt::hash($password, $algorithm, $options);
     }
 
     /**

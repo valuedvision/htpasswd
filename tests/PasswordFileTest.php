@@ -8,6 +8,7 @@ namespace axy\htpasswd\tests;
 
 use axy\htpasswd\PasswordFile;
 use axy\htpasswd\io\Test;
+use axy\crypt\BCrypt;
 
 /**
  * coversDefaultClass axy\htpasswd\PasswordFile
@@ -148,5 +149,16 @@ class PasswordFileTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($file->isUserExist('pass'));
         $this->setExpectedException('axy\htpasswd\errors\FileNotSpecified');
         $file->save();
+    }
+
+    public function testHashOptions()
+    {
+        $file = new PasswordFile();
+        $file->setPassword('nick', 'pass', PasswordFile::ALG_BCRYPT, ['cost' => 6]);
+        $content = trim($file->getContent());
+        $pattern = '~^nick\:(\$2y\$06\$[A-Za-z0-9/\.]{53})$~is';
+        $this->assertTrue((bool)preg_match($pattern, $content, $matches));
+        $hash = $matches[1];
+        $this->assertTrue(BCrypt::verify('pass', $hash));
     }
 }

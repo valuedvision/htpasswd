@@ -7,6 +7,7 @@
 namespace axy\htpasswd;
 
 use axy\crypt\APR1;
+use axy\crypt\BCrypt;
 
 /**
  * Hash/verify password
@@ -18,13 +19,20 @@ class Crypt
      *
      * @param string $password
      * @param string $algorithm [optional]
+     * @param array $options [optional]
      * @return string
      */
-    public static function hash($password, $algorithm = PasswordFile::ALG_MD5)
+    public static function hash($password, $algorithm = PasswordFile::ALG_MD5, array $options = null)
     {
+        if ($options === null) {
+            $options = [];
+        }
         switch ($algorithm) {
             case PasswordFile::ALG_MD5:
                 return APR1::hash($password);
+            case PasswordFile::ALG_BCRYPT:
+                $cost = isset($options['cost']) ? $options['cost'] : null;
+                return BCrypt::hash($password, $cost);
             case PasswordFile::ALG_SHA1:
                 return self::sha1($password);
             case PasswordFile::ALG_CRYPT:
@@ -55,6 +63,11 @@ class Crypt
         }
         if (self::cryptVerify($password, $hash)) {
             return true;
+        }
+        if (substr($hash, 0, 2) === '$2') {
+            if (BCrypt::verify($password, $hash)) {
+                return true;
+            }
         }
         return false;
     }

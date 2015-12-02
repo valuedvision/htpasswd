@@ -9,6 +9,7 @@ namespace axy\htpasswd\tests;
 use axy\htpasswd\Crypt;
 use axy\htpasswd\PasswordFile;
 use axy\crypt\APR1;
+use axy\crypt\BCrypt;
 
 /**
  * coversDefaultClass axy\htpasswd\Crypt
@@ -63,6 +64,30 @@ class CryptTest extends \PHPUnit_Framework_TestCase
     /**
      * covers ::hash
      */
+    public function testHashBCrypt()
+    {
+        $password = 'mypassword=123456';
+        $hash = Crypt::hash($password, PasswordFile::ALG_BCRYPT);
+        $this->assertInternalType('string', $hash);
+        $this->assertTrue((bool)preg_match('~^\$2y\$05\$[A-Za-z0-9/\.]{53}$~is', $hash));
+        $this->assertTrue(BCrypt::verify($password, $hash));
+    }
+
+    /**
+     * covers ::hash
+     */
+    public function testHashBCryptCost()
+    {
+        $password = 'mypassword=123456';
+        $hash = Crypt::hash($password, PasswordFile::ALG_BCRYPT, ['cost' => 7]);
+        $this->assertInternalType('string', $hash);
+        $this->assertTrue((bool)preg_match('~^\$2y\$07\$[A-Za-z0-9/\.]{53}$~is', $hash));
+        $this->assertTrue(BCrypt::verify($password, $hash));
+    }
+
+    /**
+     * covers ::hash
+     */
     public function testHashUndefined()
     {
         $this->assertNull(Crypt::hash('password', 'undefined'));
@@ -90,6 +115,8 @@ class CryptTest extends \PHPUnit_Framework_TestCase
             'md5' => ['password', '$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0'],
             'sha1' => ['password', '{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g='],
             'crypt' => ['password', 'rOVL0k/supDAY'],
+            'bcrypt' => ['pass1234', '$2y$05$skTPtV45nT7GyeUIMrmUMuI8iqFPcvROoDoTI2oUXTCVaebvdeZmq'],
+            'bcrypt-c4' => ['pass1234', '$2y$04$ce5G.RR1gl4/UiYqMinJo.pBM71xPFS4Q9MOSrgW1ptch0h.q6ytC'],
             'plain_as_md5' => ['$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0', '$apr1$aGwevNmX$4WQ0UxE4TzhoaE6QkeBJJ0'],
             'plain_as_sha1' => ['{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g=', '{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g='],
             'plain_as_crypt' => ['rOVL0k/supDAY', 'rOVL0k/supDAY'],
@@ -97,6 +124,7 @@ class CryptTest extends \PHPUnit_Framework_TestCase
             'fail_md5' => ['password', '$apr1$aGwevNmX$4WQ0UxE4TzhoaX6QkeBJJ0', false],
             'fail_sha1' => ['password', '{SHA}W6ph5Mm5Zz8GgiULbPgzG37mj9g=', false],
             'fail_crypt' => ['password', 'rOVL0z/supDAY', false],
+            'fail_bcrypt' => ['pass1234', '$2y$05$skTPtV45nT7GyeUIMrmUMuI8iqFPcvROODoTI2oUXTCVaebvdeZmq', false],
         ];
     }
 
