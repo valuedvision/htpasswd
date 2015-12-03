@@ -164,6 +164,7 @@ class PasswordFile
             return null;
         }
         $content = $this->io->load();
+        $this->users = [];
         foreach (explode("\n", $content) as $line) {
             $line = trim($line);
             if ($line !== '') {

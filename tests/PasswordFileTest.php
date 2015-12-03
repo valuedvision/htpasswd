@@ -161,4 +161,13 @@ class PasswordFileTest extends \PHPUnit_Framework_TestCase
         $hash = $matches[1];
         $this->assertTrue(BCrypt::verify('pass', $hash));
     }
+
+    /**
+     * Bug #3
+     */
+    public function testEmptyContent()
+    {
+        $file = new PasswordFile(null);
+        $file->getContent();
+    }
 }
