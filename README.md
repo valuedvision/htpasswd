@@ -10,6 +10,7 @@ PHP 5.4+
 The library does not require any dependencies (except composer packages).
 
 The library provides program API for manipulation with htpasswd file.
+For console utility see [axypro/htpasswd-cli](https://github.com/axypro/htpasswd-cli).
 
 ```php
 use axy\htpasswd\PasswordFile;
