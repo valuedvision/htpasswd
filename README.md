@@ -1,11 +1,15 @@
 # axy\htpasswd
 
+[![Latest Stable Version](https://img.shields.io/packagist/v/axy/htpasswd.svg?style=flat-square)](https://packagist.org/packages/axy/htpasswd)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.4-8892BF.svg?style=flat-square)](https://php.net/)
+[![Build Status](https://img.shields.io/travis/axypro/htpasswd/master.svg?style=flat-square)](https://travis-ci.org/axypro/htpasswd)
+
 Working with htpasswd file.
 
 * GitHub: [axypro/htpasswd](https://github.com/axypro/htpasswd)
 * Composer: [axy/htpasswd](https://packagist.org/packages/axy/htpasswd)
 
-PHP 5.4+
+Tested on PHP 5.4+, PHP 7, HHVM (on Linux).
 
 The library does not require any dependencies (except composer packages).
 

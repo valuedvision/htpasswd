@@ -93,7 +93,12 @@ class Crypt
     public static function cryptVerify($password, $hash)
     {
         $salt = substr($hash, 0, 2);
-        return (crypt($password, $salt) === $hash);
+        try {
+            $actual = crypt($password, $salt);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return ($actual === $hash);
     }
 
     /**
