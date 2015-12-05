@@ -94,6 +94,7 @@ class Crypt
     {
         $salt = substr($hash, 0, 2);
         try {
+            // PHP 7 throws exception for invalid salt
             $actual = crypt($password, $salt);
         } catch (\Exception $e) {
             return false;

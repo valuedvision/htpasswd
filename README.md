@@ -3,6 +3,8 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/axy/htpasswd.svg?style=flat-square)](https://packagist.org/packages/axy/htpasswd)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.4-8892BF.svg?style=flat-square)](https://php.net/)
 [![Build Status](https://img.shields.io/travis/axypro/htpasswd/master.svg?style=flat-square)](https://travis-ci.org/axypro/htpasswd)
+[![Coverage Status](https://coveralls.io/repos/axypro/htpasswd/badge.svg?branch=master&service=github)](https://coveralls.io/github/axypro/htpasswd?branch=master)
+
 
 Working with htpasswd file.
 

@@ -1,7 +1,7 @@
 ### dev-master
 
 * Fix warning for `crypt()` and salt in PHP7
-* Travis
+* Travis & Coveralls
 
 ### 0.1.2 (03.12.2015)
 
