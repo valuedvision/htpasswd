@@ -54,7 +54,7 @@ class Test implements IFile
      */
     public function getLines()
     {
-        return explode("\n", $this->content);
+        return explode("\n", str_replace("\r", '', $this->content));
     }
 
     /**
