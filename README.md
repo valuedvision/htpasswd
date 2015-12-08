@@ -1,16 +1,22 @@
 # axy\htpasswd
 
-Working with htpasswd file.
+Working with htpasswd file (PHP).
 
-* GitHub: [axypro/htpasswd](https://github.com/axypro/htpasswd)
-* Composer: [axy/htpasswd](https://packagist.org/packages/axy/htpasswd)
+[![Latest Stable Version](https://img.shields.io/packagist/v/axy/htpasswd.svg?style=flat-square)](https://packagist.org/packages/axy/htpasswd)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.4-8892BF.svg?style=flat-square)](https://php.net/)
+[![Build Status](https://img.shields.io/travis/axypro/htpasswd/master.svg?style=flat-square)](https://travis-ci.org/axypro/htpasswd)
+[![Coverage Status](https://coveralls.io/repos/axypro/htpasswd/badge.svg?branch=master&service=github)](https://coveralls.io/github/axypro/htpasswd?branch=master)
+[![License](https://poser.pugx.org/axy/htpasswd/license)](LICENSE)
 
-PHP 5.4+
+* The library does not require any dependencies (except composer packages).
+* Tested on PHP 5.4+, PHP 7, HHVM (on Linux).
+* Install: `composer require axy/htpasswd`.
+* License: [MIT](LICENSE).
 
-The library does not require any dependencies (except composer packages).
+### Documentation
 
-The library provides program API for manipulation with htpasswd file.
-For console utility see [axypro/htpasswd-cli](https://github.com/axypro/htpasswd-cli).
+The library provides program API for manipulation with htpasswd file
+(for console utility see [axypro/htpasswd-cli](https://github.com/axypro/htpasswd-cli)).
 
 ```php
 use axy\htpasswd\PasswordFile;
@@ -52,7 +58,7 @@ For hashing uses `$algorithm` (by default Apache MD5).
 `$options` is an array of options for hashing.
 Only `cost` for BCrypt (integer of from 4 to 31)
 
-Returns `TRUE` a new user has been created.
+Returns `TRUE` if a new user has been created.
 And `FALSE` if has been changed the password of an existing user.
 
 ##### `remove(string $user): bool`

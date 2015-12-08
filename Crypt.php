@@ -93,7 +93,13 @@ class Crypt
     public static function cryptVerify($password, $hash)
     {
         $salt = substr($hash, 0, 2);
-        return (crypt($password, $salt) === $hash);
+        try {
+            // PHP 7 throws exception for invalid salt
+            $actual = crypt($password, $salt);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return ($actual === $hash);
     }
 
     /**

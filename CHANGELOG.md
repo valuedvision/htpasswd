@@ -1,3 +1,9 @@
+### 1.0.0 (05.12.2015)
+
+* Fix warning for `crypt()` and salt in PHP7
+* Travis & Coveralls
+* Refactoring of the documentation
+
 ### 0.1.2 (03.12.2015)
 
 * #3: Fix `getContent()` for empty file
