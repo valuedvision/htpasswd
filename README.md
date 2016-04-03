@@ -15,6 +15,8 @@ Working with htpasswd file (PHP).
 
 ### Documentation
 
+[Documentation in Russian](https://github.com/axypro/htpasswd/wiki).
+
 The library provides program API for manipulation with htpasswd file
 (for console utility see [axypro/htpasswd-cli](https://github.com/axypro/htpasswd-cli)).
 
