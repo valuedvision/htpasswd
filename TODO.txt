@@ -1,0 +1,1 @@
+- Add support for GROUP files (http://httpd.apache.org/docs/current/mod/mod_authz_groupfile.html)
