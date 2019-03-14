@@ -110,12 +110,15 @@ class GroupFile
      */
     public function addUser($user)
     {
-        $this->load();
-        $new = !isset($this->users[$user]);
-        if ($new) {
-			array_push($this->users, $user);
-        }
-        return $new;
+		if (ctype_alnum($user)) {
+			$this->load();
+			$new = !isset($this->users[$user]);
+			if ($new) {
+				array_push($this->users, $user);
+			}
+			return $new;
+		}
+		return false;
     }
 
     /**
