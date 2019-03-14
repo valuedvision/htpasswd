@@ -101,6 +101,24 @@ class GroupFile
     }
 
     /**
+     * Add a user
+     *
+     * @param string $user
+     * @return bool
+     *         the user has been created
+     * @throws \axy\htpasswd\errors\InvalidFileFormat
+     */
+    public function addUser($user)
+    {
+        $this->load();
+        $new = !isset($this->users[$user]);
+        if ($new) {
+			array_push($this->users, $user);
+        }
+        return $new;
+    }
+
+    /**
      * Removes a user from the file
      *
      * @param string $user
