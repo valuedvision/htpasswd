@@ -192,6 +192,21 @@ class PasswordFile
     }
 
     /**
+     * Gets all users
+     *
+     * @return array
+     */
+    public function getUsers()
+    {
+        $this->load();
+		$users = array();
+        foreach ($this->users as $user) {
+            $users[] = $user->getName();
+        }
+        return $users;
+    }
+
+    /**
      * @var string
      */
     private $filename;
