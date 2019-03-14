@@ -147,7 +147,7 @@ class GroupFile
             if ($line !== '') {
 				if (strpos($line, self::PREFIX) === 0) {
 					$line = trim(str_replace(self::PREFIX, '', $line));
-					if (strlen($line > 0)) {
+					if (strlen($line) > 0) {
 						$this->users = explode(' ', $line);
 					} else {
 						return null;
